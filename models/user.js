@@ -33,7 +33,7 @@ const userSchema = new Schema({
   },
   profileImage: {
     type: String,
-    default: "",
+    default: "/images/defaultAvatar.png",
   },
   searchHistory: [
     {
