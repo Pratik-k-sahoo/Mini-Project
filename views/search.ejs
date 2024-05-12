@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/header.ejs') %>
+    <title>Profile</title>
+    <style>
+      .card {
+        transition: all 0.3s ease-in-out;
+      }
+
+      .card:hover {
+        scale: 1.2;
+      }
+    </style>
+  </head>
+  <body style="background: white">
+    <%- include('./partials/nav.ejs') %>
+    <div class="search-section pt-5 mt-5">
+      <div class="px-5">
+        <form action="/user/search" method="post">
+          <label for="exampleDataList" class="form-label"
+            >Search For Photo</label
+          >
+          <div class="flex gap-3">
+            <input
+              class="form-control"
+              list="datalistOptions"
+              id="exampleDataList"
+              placeholder="Type to search..."
+              name="search"
+            />
+            <button class="rounded-pill" type="submit">
+              <a href="">
+                <i class="bi bi-search"></i>
+              </a>
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- .url.regular -->
+      <div class="image-holder">
+        <% if (locals.response?.results) { %>
+          <h4 class="m-3 mx-5"><%= locals.response?.results.length %> results for <%= locals.search %></h4>
+          <% } %>
+        <div class="flex gap-5 flex-wrap px-4 m-5">
+        <% if (locals.response?.results) { %>
+         <% locals.response?.results?.forEach(result => { %>
+          <div class="card obejct-fit-cover overflow-hidden" style="width: 25rem; height: 14rem;">
+            <img src="<%= result.urls.regular %>" class="card-img-top" alt="" />
+          </div>
+         <% }) %>
+        <% } else {%>
+          <% locals.response.forEach(result => { %>
+            <div class="card obejct-fit-cover overflow-hidden" style="width: 25rem; height: 14rem;">
+              <img src="<%= result.urls.regular %>" class="card-img-top" alt="" />
+            </div>
+           <% }) %>
+        <% }%>
+      </div>
+      </div>
+    </div>
+    <%- include('./partials/footer.ejs') %>
+  </body>
+</html>

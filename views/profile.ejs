@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/header.ejs') %>
+    <title>Profile</title>
+  </head>
+  <body style="background: white">
+    <%- include('./partials/nav.ejs') %>
+    <div class="profile-section pt-5">
+      <form
+      id="uploadForm"
+      action="/user/fileUpload"
+      method="post"
+      enctype="multipart/form-data"
+      hidden
+    >
+      <input type="file" name="profileImage" />
+    </form>
+
+    <div class="px-5 border">
+      <div class="position-relative">
+        <span
+          class="position-absolute bg-dark text-center p-2 rounded-circle cursor-pointer"
+          style="top: 115px; left: 52%; width: 40px;"
+          id="uploadicon"
+        >
+          <i class="bi bi-pencil-fill text-light"></i>
+        </span>
+        <div
+          class="mt-5 border mx-auto rounded-circle"
+          style="width: 150px; height: 150px"
+        >
+          <img
+            src="<%= locals.user.profileImage %>"
+            class=" h-100 mx-auto d-block object-fit-cover"
+            alt="profileImage"
+          />
+        </div>
+      </div>
+      <div class="details-container text-center">
+        <h1 class="fw-bold mt-3 lh-1 fs-2"><%= locals.user.name %></h1>
+        <h2 class="fw-normal lh-1 fs-5">@<%= locals.user.username %></h2>
+        <div class="box-a-tag mt-5">
+          <a
+            href="/user/edit"
+            class="text-decoration-none text-black px-4 h-25 py-1 bg-secondary-subtle rounded-pill fs-6 fw-medium"
+            >Edit</a
+          >
+        </div>
+      </div>
+
+      <div class="table-holder">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Search History</th>
+              <th scope="col">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (locals.user.searchHistory.length > 0) { %>
+              <% locals.user.searchHistory.forEach((search, i) => { %>
+                <tr>
+                  <th scope="row"><%= i + 1 %></th>
+                  <td><%= search %></td>
+                  <td><%= locals.user.lastUpdated[i++] %></td>
+                </tr>
+              <% }) %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    </div>
+
+    <script>
+      document.querySelector('#uploadicon').addEventListener('click', () => {
+      document.querySelector('#uploadForm input').click();
+    });
+
+    document.querySelector('#uploadForm input').addEventListener('change', () => {
+      document.querySelector('#uploadForm').submit();
+    });
+    </script>
+    <%- include('./partials/footer.ejs') %>
+  </body>
+</html>
