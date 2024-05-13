@@ -49,7 +49,7 @@
           <% if (locals.response?.results) { %> <%
           locals.response?.results?.forEach(result => { %>
           <div class="card  overflow-hidden border-0 my-2" style="width: 25rem; height: 14rem">
-            <a href="<%= result.links.download %>" class="overflow-hidden border-0 object-fit-cover" target="_blank">
+            <a href="<%= result.links.download %>" class="overflow-hidden border-0" target="_blank">
               <img
                 src="<%= result.urls.regular %>"
                 class="card-img-top border-0 mx-auto object-fit-cover"
@@ -62,9 +62,9 @@
           <div class="card  overflow-hidden border-0 my-2" style="width: 25rem; height: 14rem">
             <img
               src="<%= result.urls.regular %>"
-              class="card-img-top border-0 mx-auto"
+              class="card-img-top border-0 mx-auto object-fit-cover"
               alt=""
-              style="width: 25rem; height: 14rem"
+              style="max-width: 25rem; height: 14rem"
             />
           </div>
           <% }) %> <% }%>
