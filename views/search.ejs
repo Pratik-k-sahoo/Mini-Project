@@ -38,14 +38,14 @@
         </form>
       </div>
       <!-- .url.regular -->
-      <div class="image-holder">
+      <div class="image-holder mx-2">
         <% if (locals.response?.results) { %>
         <h4 class="m-3 mx-5">
           <%= locals.response?.results.length %> results for <%= locals.search
           %>
         </h4>
         <% } %>
-        <div class="flex gap-5 flex-wrap px-4 m-5">
+        <div class="flex gap-5 flex-wrap m-5">
           <% if (locals.response?.results) { %> <%
           locals.response?.results?.forEach(result => { %>
           <div class="card  overflow-hidden border-0 my-2" style="width: 25rem; height: 14rem">
