@@ -22,7 +22,7 @@ router.get("/signup", (req, res) => {
 router.get("/profile", async (req, res) => {
   if (!req.user) return res.redirect("/");
   const user = await User.findOne({ _id: req.user._id });
-  return res.render("profile.ejs", {
+  return res.clearCookie("page")?.clearCookie("search")?.render("profile.ejs", {
     user,
   });
 });
@@ -67,24 +67,60 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.post("/search/prev", async (req, res) => {
+  let search = req.cookies["search"];
+  let page = parseInt(req.cookies["page"]) - 1;
+  const photos = await unsplash.search.getPhotos({
+    query: search,
+    page: page,
+    per_page: 30,
+  });
+  const response = photos.response;
+  return res.cookie("page", page).render("search.ejs", {
+    search,
+    response,
+    user: req.user,
+    page,
+  });
+});
+
 router.post("/search", async (req, res) => {
   const { search } = req.body;
   const user = await User.findOne({ _id: req.user._id });
-  user.searchHistory.push(search);
-  user.lastUpdated.push(Date.now());
-  await user.save();
-  const num = Math.floor(Math.random() * 30);
-  const photos = await unsplash.search.getPhotos({
-    query: search,
-    per_page: num,
-  });
-  const response = photos.response;
-  res.render("search.ejs", {
-    search,
-    response,
-    user,
-  });
-  // res.send(response);
+  if (search) {
+    user.searchHistory.push(search);
+    user.lastUpdated.push(Date.now());
+    await user.save();
+    const photos = await unsplash.search.getPhotos({
+      query: search,
+      per_page: 30,
+      page: 1,
+    });
+    const response = photos.response;
+    return res.cookie("page", 1).cookie("search", search).render("search.ejs", {
+      search,
+      response,
+      user,
+      page: 1,
+    });
+    // res.send(response);
+  } else {
+    let page = parseInt(req.cookies["page"]) + 1;
+    let search = req.cookies["search"];
+    const photos = await unsplash.search.getPhotos({
+      query: search,
+      page: page,
+      per_page: 30,
+    });
+    const response = photos.response;
+    return res.cookie("page", page).render("search.ejs", {
+      search,
+      response,
+      user,
+      page,
+    });
+    // res.send(response);
+  }
 });
 
 module.exports = router;

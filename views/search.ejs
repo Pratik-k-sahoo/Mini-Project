@@ -40,25 +40,55 @@
       <!-- .url.regular -->
       <div class="image-holder">
         <% if (locals.response?.results) { %>
-          <h4 class="m-3 mx-5"><%= locals.response?.results.length %> results for <%= locals.search %></h4>
-          <% } %>
+        <h4 class="m-3 mx-5">
+          <%= locals.response?.results.length %> results for <%= locals.search
+          %>
+        </h4>
+        <% } %>
         <div class="flex gap-5 flex-wrap px-4 m-5">
-        <% if (locals.response?.results) { %>
-         <% locals.response?.results?.forEach(result => { %>
-          <div class="card obejct-fit-cover overflow-hidden" style="width: 25rem; height: 14rem;">
+          <% if (locals.response?.results) { %> <%
+          locals.response?.results?.forEach(result => { %>
+          <div
+            class="card obejct-fit-cover overflow-hidden"
+            style="width: 25rem; height: 14rem"
+          >
             <img src="<%= result.urls.regular %>" class="card-img-top" alt="" />
           </div>
-         <% }) %>
-        <% } else {%>
-          <% locals.response.forEach(result => { %>
-            <div class="card obejct-fit-cover overflow-hidden" style="width: 25rem; height: 14rem;">
-              <img src="<%= result.urls.regular %>" class="card-img-top" alt="" />
-            </div>
-           <% }) %>
-        <% }%>
-      </div>
+          <% }) %> <% } else {%> <% locals.response.forEach(result => { %>
+          <div
+            class="card obejct-fit-cover overflow-hidden"
+            style="width: 25rem; height: 14rem"
+          >
+            <img src="<%= result.urls.regular %>" class="card-img-top" alt="" />
+          </div>
+          <% }) %> <% }%>
+        </div>
+        <% if (locals.search) { %>
+          <div class="btn-holder flex justify-content-center align-item-center gap-3 text-center my-5">
+          <form action="/user/search/prev" method="post">
+            <button id="btn1" class="btn btn-primary">
+              <a href=""
+                ><i class="bi bi-chevron-double-left text-white"></i
+              ></a>
+            </button>
+          </form>
+          <button id="btn" class="btn btn-primary">
+            <a href=""><i class="bi bi-chevron-double-right text-white"></i></a>
+          </button>
+          <h4>Page <%= locals.page %> of <%= locals.response.total_pages %> </h4>
+        </div>
+       <% }%>
       </div>
     </div>
+
+    <script>
+      const btn = document.getElementById("btn");
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log("BTN clicked");
+        document.querySelector("form").submit();
+      });
+    </script>
     <%- include('./partials/footer.ejs') %>
   </body>
 </html>
