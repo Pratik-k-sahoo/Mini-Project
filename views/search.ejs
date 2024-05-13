@@ -48,21 +48,21 @@
         <div class="flex gap-5 flex-wrap px-4 m-5">
           <% if (locals.response?.results) { %> <%
           locals.response?.results?.forEach(result => { %>
-          <div class="card object-fit-cover overflow-hidden border-0 my-2">
-            <a href="<%= result.links.download %>" target="_blank">
+          <div class="card  overflow-hidden border-0 my-2" style="width: 25rem; height: 14rem">
+            <a href="<%= result.links.download %>" class="overflow-hidden border-0 object-fit-cover" target="_blank">
               <img
                 src="<%= result.urls.regular %>"
-                class="card-img-top border-0 m-0"
+                class="card-img-top border-0 mx-auto object-fit-cover"
                 alt=""
-                style="width: 25rem; height: 14rem"
+                style="max-width: 25rem; height: 14rem"
               />
             </a>
           </div>
           <% }) %> <% } else {%> <% locals.response.forEach(result => { %>
-          <div class="card object-fit-cover overflow-hidden border-0 my-2">
+          <div class="card  overflow-hidden border-0 my-2" style="width: 25rem; height: 14rem">
             <img
               src="<%= result.urls.regular %>"
-              class="card-img-top border-0 m-0"
+              class="card-img-top border-0 mx-auto"
               alt=""
               style="width: 25rem; height: 14rem"
             />
