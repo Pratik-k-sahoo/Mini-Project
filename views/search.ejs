@@ -48,7 +48,7 @@
         <div class="flex gap-5 flex-wrap px-4 m-5">
           <% if (locals.response?.results) { %> <%
           locals.response?.results?.forEach(result => { %>
-          <div class="card object-fit-cover overflow-hidden border-0">
+          <div class="card object-fit-cover overflow-hidden border-0 my-2">
             <a href="<%= result.links.download %>" target="_blank">
               <img
                 src="<%= result.urls.regular %>"
@@ -59,10 +59,10 @@
             </a>
           </div>
           <% }) %> <% } else {%> <% locals.response.forEach(result => { %>
-          <div class="card object-fit-cover overflow-hidden border-0">
+          <div class="card object-fit-cover overflow-hidden border-0 my-2">
             <img
               src="<%= result.urls.regular %>"
-              class="card-img-top border-0 my-2"
+              class="card-img-top border-0 m-0"
               alt=""
               style="width: 25rem; height: 14rem"
             />
